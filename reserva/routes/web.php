@@ -16,6 +16,7 @@ use App\Http\Controllers\UserController;
 Route::view('/login', 'login.form')->name('login.form');
 Route::post('/auth', [LoginController::class, 'auth'])->name('login.auth');
 Route::get('/home', [SiteController::class, 'index'])->name('site.home');
+Route::get('/home', [SiteController::class, 'index'])->name('site.logout');
 
 //Route::post('/reservas', [LaboratorioController::class, 'index'])->name('laboratorio.index');
 //Route::match(['get', 'post'], '/reservas', [LaboratorioController::class, 'index'])->name('laboratorio.index');
@@ -39,10 +40,9 @@ Route::prefix('laboratorios')->group(function(){
   Route::put('/{laboratorio}/update', [LaboratorioController::class, 'update'])->name('laboratorios.update');
   Route::delete('/{laboratorio}/destroy', [LaboratorioController::class, 'destroy'])->name('laboratorios.destroy');
 });
-
-Route::prefix('reservas')->group(function(){
-    Route::get('/', [ReservaController::class, 'index'])->name('reservas.index');
-    Route::post('/', [ReservaController::class, 'store'])->name('reservas.store');
-    Route::get('/create', [ReservaController::class, 'create'])->name('reservas.create');
-});
-
+Route::get('/', [ReservaController::class, 'index'])->name('reservas.home');
+Route::get('/create', [ReservaController::class, 'create'])->name('reserva.create');
+Route::post('/store', [ReservaController::class, 'store'])->name('reservas.store');
+Route::get('/{reserva}', [ReservaController::class, 'show'])->name('reservas.show');
+Route::get('/{laboratorio}/edit', [ReservaController::class, 'edit'])->name('reservas.edit');
+Route::delete('/{reserva}/destroy', [ReservaController::class, 'destroy'])->name('reservas.destroy');

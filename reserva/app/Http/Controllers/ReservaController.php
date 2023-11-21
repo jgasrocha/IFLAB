@@ -14,6 +14,7 @@ class ReservaController extends Controller
      */
     public function index(Request $request)
     {
+        $reservas = Reserva::paginate(6);
         return view('reserva.index', compact('reservas'));
     }
 
@@ -24,8 +25,8 @@ class ReservaController extends Controller
      */
     public function create()
     {
-        $laboratorio_id = 1; // Define o primeiro laboratório como padrão.
-        $laboratorios = Laboratorio::all(); // Obtém todos os laboratórios.
+        $laboratorio_id = 1; 
+        $laboratorios = Laboratorio::all();
 
         return view('reserva.create', compact('laboratorio_id', 'laboratorios'));
     }
@@ -37,27 +38,27 @@ class ReservaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'LaboratorioID' => 'required',
-            'DataInicio' => 'required',
-            'Duracao' => 'required',
-            'UserID' => 'required', // Certifique-se de ter um campo no formulário para selecionar o laboratório.
-        ]); 
-
-    // Recupere o ID do usuário autenticado.
-        $userId = auth()->id();
-
-    // Crie uma nova reserva associando o laboratório selecionado ao usuário.
-        Reserva::create([
-            'LaboratorioID' => $request->input('LaboratorioID'),
-            'DataInicio' => $request->input('DataInicio'),
-            'Duracao' => $request->input('DataInicio'),
-            'UserID' => $userId,
+{
+    $request->validate([
+        'laboratorio_id' => 'required',
+        'data_inicio' => 'required',
+        'duracao' => 'required',
     ]);
 
-        return redirect()->route('reservas.index')->with('success', 'Reserva criada com sucesso.');
+    $user = auth()->user();
+
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'Usuário não autenticado.');
     }
+
+    $reservaData = $request->only(['laboratorio_id', 'data_inicio', 'duracao']);
+    $reservaData['UserID'] = $user->id;
+
+    Reserva::create($reservaData);
+
+    return redirect()->route('reservas.home')->with('success', 'Reserva criada com sucesso.');
+}
+
 
     /**
      * Display the specified resource.
@@ -104,11 +105,14 @@ class ReservaController extends Controller
      */
     public function destroy(Reserva $reserva)
     {
-        if ($reserva->id_user == auth()->id()){
-            $reserva->delete();
-            return redirect()->route('home')->with('succes', 'Reserva excluída com sucesso.');
-        } else{
-            return redirect()->route('home')->with('error', 'Você não tem permissão para excluir esta reserva.');
-        }
+    $user = auth()->user();
+
+    if ($reserva->user->id == $user->id) {
+        $reserva->delete();
+        return redirect()->route('reservas.home')->with('success', 'Reserva excluída com sucesso.');
+    } else {
+        return redirect()->route('reservas.home')->with('error', 'Você não tem permissão para excluir esta reserva.');
     }
+    }
+
 }

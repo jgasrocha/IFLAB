@@ -11,7 +11,7 @@
             <input type="email" name="email" id="email">
             <label for="password">Senha:</label>
             <input type="password" name="password" id="password">
-            <button type="submit">Salvar</button>
+            <button class="btn waves-effect waves-light red" type="submit">Salvar</button>
         </form>
     </div>
 @endsection

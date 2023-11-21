@@ -7,12 +7,12 @@
     <p><strong>Email:</strong> {{ $user->email }}</p>
     
     <p>
-        <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-primary">Editar Usuário</a>
+        <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-danger red">Editar Usuário</a>
     </p>    
     <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger">Excluir Usuário</button>
+        <button type="submit" class="btn btn-danger red">Excluir Usuário</button>
     </form>
 </div>
 @endsection

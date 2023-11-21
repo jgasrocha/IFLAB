@@ -12,15 +12,15 @@ class Reserva extends Model
     protected $table = 'reservas';
 
     protected $fillable = [
-        'LaboratorioID',
+        'laboratorio_id',
         'UserID',
-        'DataInicio',
-        'DataFim',
+        'data_inicio',
+        'duracao',
     ];
 
     public function laboratorio()
     {
-        return $this->belongsTo(Laboratorio::class, 'LaboratorioID');
+        return $this->belongsTo(Laboratorio::class, 'laboratorio_id');
     }
     public function user()
     {

@@ -1,4 +1,4 @@
-@extends('site.layout')
+@extends('reserva.layout')
 
 @section('conteudo')
 
@@ -15,11 +15,13 @@
             <tr>
                 <td>{{ $laboratorio->name }}</td>
                 <td>
-                    <a href="{{ route('laboratorio.show', ['laboratorio' => $laboratorio->id]) }}" class="btn btn-primary">Detalhes</a>
+                    <a href="{{ route('laboratorio.show', ['laboratorio' => $laboratorio->id]) }}" class="btn-floating btn-medium scale-transition red"><i class="medium material-icons">remove_red_eye</i></a>
                 </td>
             </tr>
             @endforeach
-            <tr><a href="{{ route('laboratorios.create') }}">Novo Laboratório</a></tr>
+            <tr>
+                <td colspan="1"></td>
+                <td colspan="7"><a href="{{ route('laboratorios.create') }}" class="btn-floating btn-large scale-transition right"><i class="material-icons right red ">add</i></a></td></tr>
         </tbody>
     </table>
 </div>

@@ -1,6 +1,5 @@
-@extends('site.layout')
+@extends('reserva.layout')
 
-@section('conteudo')
 <div class="container">
     <h1>Editar Laboratório</h1>
     @if (session('success'))
@@ -13,9 +12,10 @@
         @method('PUT')
         <label for="name">Nome:</label>
         <input type="text" name="name" id="name" value="{{ $laboratorio->name }}">
-        <button type="submit">Atualizar</button>
+        <button class="btn waves-effect waves-light red" type="submit">Atualizar</button>
+        <button class="red"><a href="{{ route('laboratorio.show', ['laboratorio' => $laboratorio->id]) }} " class="btn waves-effect waves-light red" style="color: white">Voltar</a></button>
     </form>
 
-    <a href="{{ route('laboratorio.show', ['laboratorio' => $laboratorio->id]) }}" class="btn btn-primary">Detalhes</a>
+    
 </div>
-@endsection
+

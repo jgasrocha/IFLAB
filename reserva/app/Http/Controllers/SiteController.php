@@ -13,4 +13,9 @@ class SiteController extends Controller
     {
         return view('site.home');
     }
+
+    public function logout()
+    {
+        return view('login.form');
+    }
 }

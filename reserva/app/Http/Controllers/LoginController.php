@@ -15,8 +15,8 @@ class LoginController extends Controller
 
         if(Auth::attempt($credenciais)){
             $request->session()->regenerate();
-            //return redirect()->intended('site.index');
-            return redirect()->route('site.home');
+            return redirect()->route('reservas.home');
+            //return redirect()->route('reservas.index');
         }else{
             return redirect()->route('login.form')->with('erro', 'Email ou senha iválida.');
         }
