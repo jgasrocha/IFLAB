@@ -1,2 +1,2 @@
 # IFLAB
- Sistema de agendamentos de laboratórios feito cem PHP.
+ Sistema de agendamentos de laboratórios feito em PHP.
